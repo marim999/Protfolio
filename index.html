@@ -1,0 +1,705 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mariam Mohamed Mahmoud | Front-End Developer</title>
+  <meta name="description" content="Front-End Developer specialized in HTML, CSS, Bootstrap, JavaScript, TypeScript and React." />
+  <style>
+    :root {
+      --navy: #1e2a47;
+      --navy-soft: #2c3b60;
+      --teal: #2bb3a3;
+      --teal-soft: #e6f7f5;
+      --lavender: #8b7fe8;
+      --bg: #f6f8fc;
+      --card: #ffffff;
+      --text: #33405c;
+      --muted: #7a859e;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(30, 42, 71, 0.08);
+      --shadow-hover: 0 20px 40px rgba(30, 42, 71, 0.16);
+    }
+ 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    section { padding: 90px max(8%, 24px); }
+    h1, h2, h3 { color: var(--navy); line-height: 1.25; }
+    .section-title { text-align: center; margin-bottom: 14px; font-size: 2.1rem; }
+    .section-sub { text-align: center; color: var(--muted); max-width: 620px; margin: 0 auto 50px; }
+    .tag {
+      display: inline-block;
+      color: var(--teal);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+ 
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 13px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--teal), var(--lavender));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(43, 179, 163, 0.35);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--navy);
+      color: var(--navy);
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+ 
+    /* Navbar */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 8%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      transition: box-shadow 0.3s ease;
+    }
+    .navbar.scrolled { box-shadow: var(--shadow); }
+    .logo { font-weight: 800; color: var(--navy); font-size: 1.2rem; }
+    .logo span { color: var(--teal); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-weight: 500; color: var(--navy); position: relative; }
+    .nav-links a::after {
+      content: ""; position: absolute; left: 0; bottom: -4px;
+      width: 0; height: 2px; background: var(--teal);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+ 
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      padding: 120px max(8%, 24px) 60px;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(43, 179, 163, 0.12), transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(139, 127, 232, 0.14), transparent 40%),
+        var(--bg);
+    }
+    .hero-text { max-width: 560px; }
+    .hero h1 { font-size: 3.2rem; margin-bottom: 14px; }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--teal), var(--lavender));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero p.lead { color: var(--muted); font-size: 1.1rem; margin-bottom: 30px; }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+    .avatar-wrap {
+      position: relative;
+      width: 340px; height: 340px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--lavender));
+      padding: 8px;
+      animation: float 5s ease-in-out infinite;
+    }
+    .avatar {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: var(--navy-soft);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 4.5rem; font-weight: 800;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+ 
+    /* About */
+    .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 50px; align-items: start; }
+    .about-text p { color: var(--muted); margin-bottom: 16px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 28px; }
+    .stat {
+      background: var(--card); border-radius: var(--radius);
+      padding: 22px 10px; text-align: center; box-shadow: var(--shadow);
+    }
+    .stat h3 { font-size: 2rem; color: var(--teal); }
+    .stat p { color: var(--muted); font-size: 0.9rem; }
+    .skills-box {
+      background: var(--card); border-radius: var(--radius);
+      padding: 30px; box-shadow: var(--shadow);
+    }
+    .skill { margin-bottom: 18px; }
+    .skill-head { display: flex; justify-content: space-between; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+    .bar { height: 8px; background: #e7ebf3; border-radius: 10px; overflow: hidden; }
+    .bar span {
+      display: block; height: 100%; width: 0;
+      background: linear-gradient(90deg, var(--teal), var(--lavender));
+      border-radius: 10px;
+      transition: width 1.4s ease;
+    }
+ 
+    /* USP */
+    .usp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+    .usp-card {
+      background: var(--card); border-radius: var(--radius);
+      padding: 30px 24px; box-shadow: var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .usp-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
+    .usp-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: var(--teal-soft); color: var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 16px;
+    }
+    .usp-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .usp-card p { color: var(--muted); font-size: 0.95rem; }
+ 
+    /* Projects */
+    .filters { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 9px 22px; border-radius: 50px; border: 2px solid #dfe5f0;
+      background: transparent; color: var(--navy); font-weight: 600; cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--navy); border-color: var(--navy); color: #fff;
+    }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+    .project-card {
+      background: var(--card); border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex; flex-direction: column;
+    }
+    .project-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
+    .project-thumb {
+      height: 170px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 2.2rem; font-weight: 800;
+      position: relative;
+    }
+    .project-thumb.t1 { background: linear-gradient(135deg, #2bb3a3, #4fd1c5); }
+    .project-thumb.t2 { background: linear-gradient(135deg, #8b7fe8, #b39ddb); }
+    .project-thumb.t3 { background: linear-gradient(135deg, #1e2a47, #3d5a80); }
+    .project-thumb.t4 { background: linear-gradient(135deg, #5b8def, #8b7fe8); }
+    .project-thumb.t5 { background: linear-gradient(135deg, #f5a623, #f57c00); }
+    .badge {
+      position: absolute; top: 14px; right: 14px;
+      background: rgba(255, 255, 255, 0.92); color: var(--navy);
+      font-size: 0.75rem; font-weight: 700;
+      padding: 5px 12px; border-radius: 50px;
+    }
+    .project-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .project-body h3 { margin-bottom: 8px; }
+    .project-body p { color: var(--muted); font-size: 0.95rem; margin-bottom: 14px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .chip {
+      background: var(--teal-soft); color: var(--teal);
+      font-size: 0.78rem; font-weight: 600;
+      padding: 4px 12px; border-radius: 50px;
+    }
+    .project-actions { margin-top: auto; display: flex; gap: 10px; }
+    .project-actions .btn { padding: 9px 18px; font-size: 0.9rem; }
+    .btn-details {
+      background: var(--navy); color: #fff; border: none;
+    }
+ 
+    /* Modal (native dialog) */
+    dialog {
+      border: none; border-radius: 22px; padding: 0;
+      width: min(620px, 92vw);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+    }
+    dialog::backdrop { background: rgba(30, 42, 71, 0.6); backdrop-filter: blur(4px); }
+    .dialog-inner { padding: 36px; position: relative; }
+    .dialog-close {
+      position: absolute; top: 14px; right: 16px;
+      background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--muted);
+    }
+    .dialog-inner h3 { font-size: 1.6rem; margin-bottom: 6px; }
+    .dialog-inner .status { color: var(--teal); font-weight: 600; margin-bottom: 14px; }
+    .dialog-inner ul { padding-left: 20px; color: var(--muted); margin: 14px 0 20px; }
+    .dialog-inner ul li { margin-bottom: 6px; }
+ 
+    /* Experience & education */
+    .timeline { max-width: 760px; margin: 0 auto; position: relative; }
+    .timeline::before {
+      content: ""; position: absolute; left: 14px; top: 0; bottom: 0;
+      width: 3px; background: linear-gradient(var(--teal), var(--lavender));
+      border-radius: 3px;
+    }
+    .timeline-item { position: relative; padding-left: 50px; margin-bottom: 30px; }
+    .timeline-item::before {
+      content: ""; position: absolute; left: 6px; top: 6px;
+      width: 19px; height: 19px; border-radius: 50%;
+      background: var(--card); border: 4px solid var(--teal);
+    }
+    .timeline-item h3 { font-size: 1.1rem; }
+    .timeline-item .date { color: var(--lavender); font-weight: 600; font-size: 0.9rem; }
+    .timeline-item p { color: var(--muted); font-size: 0.95rem; }
+ 
+    /* Contact */
+    .contact-box {
+      background: linear-gradient(135deg, var(--navy), var(--navy-soft));
+      border-radius: 26px; padding: 60px 40px; text-align: center; color: #fff;
+      box-shadow: var(--shadow-hover);
+    }
+    .contact-box h2 { color: #fff; font-size: 2.1rem; margin-bottom: 12px; }
+    .contact-box p { color: #c9d3ea; max-width: 560px; margin: 0 auto 30px; }
+    .contact-box .btn-primary { margin: 0 8px 10px; }
+    .contact-box .btn-outline { border-color: #fff; color: #fff; margin: 0 8px 10px; }
+    .contact-box .btn-outline:hover { background: #fff; color: var(--navy); }
+ 
+    footer { text-align: center; padding: 28px; color: var(--muted); font-size: 0.9rem; }
+ 
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+ 
+    /* Responsive */
+    @media (max-width: 992px) {
+      .hero { flex-direction: column; text-align: center; padding-top: 140px; }
+      .hero-buttons { justify-content: center; }
+      .avatar-wrap { width: 260px; height: 260px; }
+      .hero h1 { font-size: 2.6rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .usp-grid { grid-template-columns: repeat(2, 1fr); }
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      section { padding: 70px 6%; }
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2.1rem; }
+      .usp-grid, .projects-grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr; }
+      .contact-box { padding: 40px 22px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="logo">Mariam<span>.dev</span></div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#usp">Why Me</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+ 
+  <!-- Hero -->
+  <header class="hero" id="home">
+    <div class="hero-text reveal">
+      <span class="tag">Front-End Developer</span>
+      <h1>Hi, I'm <span class="highlight">Mariam Mohamed Mahmoud</span></h1>
+      <p class="lead">I build fast, responsive and beautiful web interfaces that turn your ideas into a product users love. Clean code, smooth animations and on-time delivery.</p>
+      <div class="hero-buttons">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-outline">Let's Talk</a>
+      </div>
+    </div>
+    <div class="avatar-wrap reveal">
+      <img src="profile.png" alt="Mariam Mohamed Mahmoud" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.outerHTML='<div class=&quot;avatar&quot;>MM</div>'" />
+    </div>
+  </header>
+ 
+  <!-- About -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <span class="tag">About Me</span>
+        <h2 class="section-title" style="text-align:left;">Building interfaces with purpose</h2>
+        <p>I'm a Front-End Developer focused on React and modern JavaScript. I care about the details: layouts that work on every screen, interactions that feel natural, and code that is easy to maintain.</p>
+        <p>I've built more than seven web projects, four of them are live online, and I've delivered work for a real client. I'm currently part of a six-person team developing a full React project. I work well in teams, manage my time carefully, and always meet my deadlines.</p>
+        <div class="stats">
+          <div class="stat"><h3 data-count="7">0</h3><p>Projects Built</p></div>
+          <div class="stat"><h3 data-count="4">0</h3><p>Live Websites</p></div>
+          <div class="stat"><h3 data-count="3.46">0</h3><p>University GPA</p></div>
+        </div>
+      </div>
+ 
+      <div class="skills-box reveal">
+        <h3 style="margin-bottom: 22px;">Core Skills</h3>
+        <div class="skill"><div class="skill-head"><span>HTML5 & CSS3</span><span>95%</span></div><div class="bar"><span data-width="95"></span></div></div>
+        <div class="skill"><div class="skill-head"><span>Bootstrap</span><span>90%</span></div><div class="bar"><span data-width="90"></span></div></div>
+        <div class="skill"><div class="skill-head"><span>JavaScript</span><span>88%</span></div><div class="bar"><span data-width="88"></span></div></div>
+        <div class="skill"><div class="skill-head"><span>React</span><span>85%</span></div><div class="bar"><span data-width="85"></span></div></div>
+        <div class="skill"><div class="skill-head"><span>TypeScript</span><span>75%</span></div><div class="bar"><span data-width="75"></span></div></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- USP -->
+  <section id="usp" style="background: #fff;">
+    <span class="tag reveal" style="display:block;text-align:center;">Why Work With Me</span>
+    <h2 class="section-title reveal">What makes me different</h2>
+    <p class="section-sub reveal">Good code matters, but so does working with someone you can rely on. Here's what you get when we work together.</p>
+    <div class="usp-grid">
+      <div class="usp-card reveal">
+        <div class="usp-icon">&#9889;</div>
+        <h3>Fast Delivery</h3>
+        <p>I plan my time carefully and stick to deadlines, so your project moves forward without surprises.</p>
+      </div>
+      <div class="usp-card reveal">
+        <div class="usp-icon">&#128241;</div>
+        <h3>Works on Every Screen</h3>
+        <p>Every page I build is responsive and tested on mobile, tablet and desktop.</p>
+      </div>
+      <div class="usp-card reveal">
+        <div class="usp-icon">&#129309;</div>
+        <h3>Clear Communication</h3>
+        <p>I keep you updated at every stage and explain technical decisions in plain language.</p>
+      </div>
+      <div class="usp-card reveal">
+        <div class="usp-icon">&#127919;</div>
+        <h3>Team Player</h3>
+        <p>Experienced in working with a team on a shared codebase, using Git and organized workflows.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Projects -->
+  <section id="projects">
+    <span class="tag reveal" style="display:block;text-align:center;">Portfolio</span>
+    <h2 class="section-title reveal">Selected Projects</h2>
+    <p class="section-sub reveal">A mix of live websites, React applications and a team project in progress.</p>
+ 
+    <div class="filters reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="html">HTML / JS</button>
+      <button class="filter-btn" data-filter="react">React</button>
+    </div>
+ 
+    <div class="projects-grid">
+ 
+      <!-- Project 1 -->
+      <article class="project-card reveal" data-category="html">
+        <div class="project-thumb t1">
+          Nursery
+          <span class="badge">Live</span>
+        </div>
+        <div class="project-body">
+          <h3>Nursery Website & Parent Portal</h3>
+          <p>Child registration with parent details, allergies and authorized pickup, plus a portal where parents check their child's sleep, meals and mood.</p>
+          <div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span></div>
+          <div class="project-actions">
+            <a href="https://marim999.github.io/nursery-page/" target="_blank" rel="noopener" class="btn btn-primary">Live Demo</a>
+            <button class="btn btn-details" data-project="0">Details</button>
+          </div>
+        </div>
+      </article>
+ 
+      <!-- Project 2 -->
+      <article class="project-card reveal" data-category="html">
+        <div class="project-thumb t2">
+          E-Learning
+          <span class="badge">Live</span>
+        </div>
+        <div class="project-body">
+          <h3>E-Learning Landing Page</h3>
+          <p>A responsive course platform landing page with dynamic course filters, instructor ratings and student feedback, and a contact form.</p>
+          <div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">EmailJS</span></div>
+          <div class="project-actions">
+            <a href="https://marim999.github.io/E-learning-website/" target="_blank" rel="noopener" class="btn btn-primary">Live Demo</a>
+            <button class="btn btn-details" data-project="1">Details</button>
+          </div>
+        </div>
+      </article>
+ 
+      <!-- Project 3 -->
+      <article class="project-card reveal" data-category="react">
+        <div class="project-thumb t3">
+          Books
+          <span class="badge">React</span>
+        </div>
+        <div class="project-body">
+          <h3>Books Management App</h3>
+          <p>A full CRUD application to add, view, edit and delete books, with routed pages for Home, Create Book and Contact.</p>
+          <div class="chips"><span class="chip">React</span><span class="chip">Vite</span><span class="chip">CRUD</span></div>
+          <div class="project-actions">
+            <a href="https://marim999.github.io/Books-app/" target="_blank" rel="noopener" class="btn btn-primary">Live Demo</a>
+            <button class="btn btn-details" data-project="2">Details</button>
+          </div>
+        </div>
+      </article>
+ 
+      <!-- Project 4 -->
+      <article class="project-card reveal" data-category="react">
+        <div class="project-thumb t4">
+          Employees
+          <span class="badge">React</span>
+        </div>
+        <div class="project-body">
+          <h3>Employee Management System</h3>
+          <p>An employee dashboard with a data table, create and edit forms, and a REST-style data layer powered by json-server.</p>
+          <div class="chips"><span class="chip">React</span><span class="chip">Vite</span><span class="chip">json-server</span></div>
+          <div class="project-actions">
+            <a href="https://marim999.github.io/employee-dashboard-react/" target="_blank" rel="noopener" class="btn btn-primary">Live Demo</a>
+            <button class="btn btn-details" data-project="3">Details</button>
+          </div>
+        </div>
+      </article>
+ 
+      <!-- Project 5 -->
+      <article class="project-card reveal" data-category="react">
+        <div class="project-thumb t5">
+          Nexora
+          <span class="badge">In Progress</span>
+        </div>
+        <div class="project-body">
+          <h3>Nexora: Project Management Platform</h3>
+          <p>A team project with six developers: a React front-end for dashboards, task management, team views and analytics, built with a shared workflow.</p>
+          <div class="chips"><span class="chip">React</span><span class="chip">Team Project</span><span class="chip">Git</span></div>
+          <div class="project-actions">
+            <button class="btn btn-details" data-project="4">Details</button>
+          </div>
+        </div>
+      </article>
+ 
+    </div>
+  </section>
+ 
+  <!-- Education & Certificates -->
+  <section id="experience" style="background:#fff;">
+    <span class="tag reveal" style="display:block;text-align:center;">Education & Training</span>
+    <h2 class="section-title reveal">My Journey</h2>
+    <p class="section-sub reveal">Formal study, certifications and hands-on training.</p>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <span class="date">2025 - 2029 (Expected)</span>
+        <h3>Bachelor's Degree in Computer Science</h3>
+        <p>Misr University for Science and Technology (MUST). Current GPA: 3.46.</p>
+      </div>
+      <div class="timeline-item reveal">
+        <span class="date">In Progress</span>
+        <h3>Digital Egypt Pioneers Initiative (DEPI)</h3>
+        <p>Front-end track, including a team capstone project, freelancing and negotiation training.</p>
+      </div>
+      <div class="timeline-item reveal">
+        <span class="date">Certificate</span>
+        <h3>Problem Solving, IEEE</h3>
+        <p>Certified in problem solving and structured approaches to technical challenges.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Contact -->
+  <section id="contact">
+    <div class="contact-box reveal">
+      <h2>Let's build something great together</h2>
+      <p>Have a project in mind? Send me a message and I'll reply within 24 hours with my thoughts and next steps.</p>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=mariambasiouny54@gmail.com" target="_blank" rel="noopener" class="btn btn-primary">Email Me</a>
+      <a href="https://wa.me/201143009504" target="_blank" rel="noopener" class="btn btn-outline">WhatsApp</a>
+      <a href="https://github.com/marim999" target="_blank" rel="noopener" class="btn btn-outline">GitHub</a>
+      <a href="https://www.linkedin.com/in/mariam-basiouny-08b8bb389/" target="_blank" rel="noopener" class="btn btn-outline">LinkedIn</a>
+    </div>
+  </section>
+ 
+  <footer>
+    <p>&copy; 2026 Mariam Mohamed Mahmoud. Built with HTML, CSS and JavaScript.</p>
+  </footer>
+ 
+  <!-- Project details dialog -->
+  <dialog id="projectDialog">
+    <div class="dialog-inner">
+      <button class="dialog-close" aria-label="Close">&times;</button>
+      <h3 id="dialogTitle"></h3>
+      <div class="status" id="dialogStatus"></div>
+      <p id="dialogDesc"></p>
+      <ul id="dialogList"></ul>
+      <div class="chips" id="dialogChips"></div>
+    </div>
+  </dialog>
+ 
+  <script>
+    // Project details (used by the Details modal)
+    const projects = [
+      {
+        title: "Nursery Website & Parent Portal",
+        status: "Live website",
+        desc: "A complete website for a nursery with a child registration system and a parent portal.",
+        features: [
+          "Registration form for child, parents, allergies and authorized pickup persons",
+          "Parent portal showing sleep percentage, meals, mood and daily status",
+          "Teacher notes section for each child",
+          "Responsive layout for mobile and desktop"
+        ],
+        tech: ["HTML", "CSS", "JavaScript"]
+      },
+      {
+        title: "E-Learning Landing Page",
+        status: "Live website",
+        desc: "A landing page for an online learning platform that presents courses, instructors and student feedback.",
+        features: [
+          "Course list with category filters",
+          "Instructor ratings calculated from stars",
+          "Student feedback section",
+          "Footer email form sent with EmailJS to the platform owner"
+        ],
+        tech: ["HTML", "CSS", "JavaScript", "EmailJS"]
+      },
+      {
+        title: "Books Management App",
+        status: "React application",
+        desc: "A single-page application to manage a list of books.",
+        features: [
+          "Add, view, edit and delete books (CRUD)",
+          "Multiple pages: Home, Create Book and Contact",
+          "Built with React components and Vite"
+        ],
+        tech: ["React", "Vite", "CSS"]
+      },
+      {
+        title: "Employee Management System",
+        status: "React application",
+        desc: "An employee management dashboard built with React and a mock REST API.",
+        features: [
+          "Employee table on the home page",
+          "Create and edit employee forms",
+          "Data stored and served with json-server"
+        ],
+        tech: ["React", "Vite", "json-server"]
+      },
+      {
+        title: "Nexora: Project Management Platform",
+        status: "In progress (team of 6)",
+        desc: "A project management and analytics platform built by a six-person team. My focus is on the front-end.",
+        features: [
+          "Dashboard with calendar and key metrics",
+          "Projects and tasks management with filters",
+          "Team members and workload views",
+          "Analytics and notifications in the navbar"
+        ],
+        tech: ["React", "Git", "Team workflow"]
+      }
+    ];
+ 
+    // Navbar shadow on scroll
+    const navbar = document.getElementById("navbar");
+    window.addEventListener("scroll", () => {
+      navbar.classList.toggle("scrolled", window.scrollY > 50);
+    });
+ 
+    // Scroll reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+ 
+    // Animated counters and skill bars
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.querySelectorAll("[data-count]").forEach(el => {
+          const target = parseFloat(el.dataset.count);
+          const decimals = target % 1 ? 2 : 0;
+          const duration = 1400;
+          const start = performance.now();
+          const step = (now) => {
+            const progress = Math.min((now - start) / duration, 1);
+            el.textContent = (target * progress).toFixed(decimals);
+            if (progress < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        });
+        entry.target.querySelectorAll("[data-width]").forEach(bar => {
+          bar.style.width = bar.dataset.width + "%";
+        });
+        statsObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.3 });
+    statsObserver.observe(document.querySelector(".about-grid"));
+ 
+    // Project filters
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll(".project-card");
+    filterButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          const match = filter === "all" || card.dataset.category === filter;
+          card.style.display = match ? "flex" : "none";
+        });
+      });
+    });
+ 
+    // Project details dialog
+    const dialog = document.getElementById("projectDialog");
+    document.querySelectorAll(".btn-details").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const p = projects[btn.dataset.project];
+        document.getElementById("dialogTitle").textContent = p.title;
+        document.getElementById("dialogStatus").textContent = p.status;
+        document.getElementById("dialogDesc").textContent = p.desc;
+        const list = document.getElementById("dialogList");
+        list.innerHTML = "";
+        p.features.forEach(f => {
+          const li = document.createElement("li");
+          li.textContent = f;
+          list.appendChild(li);
+        });
+        const chips = document.getElementById("dialogChips");
+        chips.innerHTML = "";
+        p.tech.forEach(t => {
+          const span = document.createElement("span");
+          span.className = "chip";
+          span.textContent = t;
+          chips.appendChild(span);
+        });
+        dialog.showModal();
+      });
+    });
+    dialog.querySelector(".dialog-close").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  </script>
+</body>
+</html>
+ 
+
+
+
+
+
+
+
+
+
